@@ -1,4 +1,4 @@
-<footer class="bg-warning text-center" style="background-color: #e1e1e1;">
+<footer class="text-center fixed-bottom" style="background-color: #F28705;">
     <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.05);">
         © 2025 Copyright: ProgWeb 2025/1
     </div>

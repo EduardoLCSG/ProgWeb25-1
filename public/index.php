@@ -7,8 +7,8 @@
     </head>
     <body class="w-100">
     <?php require_once 'components/header.php'; ?>
-        <main class="m-2 d-flex" style="height: 640px;">
-            <div class="w-25 h-100" style="background-color: #e1e1e1;"> 
+        <main class="m-2 d-flex">
+            <div class="w-25 min-vh-100" style="background-color: #e1e1e1;"> 
                 <ul>
                     <li><a href="">Todos</a></li>
                     <li><a href="">Inversores</a></li>
@@ -18,7 +18,7 @@
                 </ul>
     
             </div>
-            <div class="w-75 h-100 bg-danger container">
+            <div class="w-75 min-vh-100 bg-danger container">
                 <div class="row h-50">
                   <div class="bg-warning w-25 col">asd</div>
                   <div class="bg-success w-25 col">ass</div>
