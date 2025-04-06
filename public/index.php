@@ -29,7 +29,6 @@
                   <div class="bg-warning w-25 col">ada</div>
                   <div class="bg-success w-25 col">sad</div>
                 </div>
-    
             </div>
     
         </main>
