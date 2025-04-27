@@ -3,6 +3,7 @@
 ## Algumas instruções de download das dependências para conseguir rodar o projeto:
 
 ### Versão do PHP 8.4
+- Nessa versão, não vai precisar usar um XAMPP, WAMP, Laragon, MAMP ou similares para rodar o projeto.
 - Estamos utilizando a versão 8.4.5. Windows => [VS17 x64 Thread Safe](https://windows.php.net/downloads/releases/php-8.4.5-Win32-vs17-x64.zip)
 
 ### Banco de dados Postgresql

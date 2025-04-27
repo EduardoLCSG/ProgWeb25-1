@@ -1,37 +1,150 @@
 <!doctype html>
 <html lang="en">
-    <head>
-        <title>Solar</title>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
-    </head>
-    <body class="w-100">
+
+<head>
+    <title>Solar</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+</head>
+
+<style>
+    .componente-produto {
+        border: 1px solid #ccc;
+        padding: 15px;
+        margin-bottom: 10px;
+        width: 300px;
+        border-radius: 5px;
+        font-family: sans-serif;
+        box-shadow: 2px 2px 3px black;
+    }
+
+    .imagem-produto {
+        width: 100%;
+        max-height: 150px;
+        object-fit: contain;
+        margin-bottom: 10px;
+    }
+
+    .informacao {
+        margin-bottom: 8px;
+    }
+
+    .preco {
+        font-size: 1.2em;
+        font-weight: bold;
+        color: #e44d26;
+    }
+</style>
+
+<body class="w-100">
     <?php require_once 'components/header.php'; ?>
-        <main class="m-2 d-flex">
-            <div class="w-25 min-vh-100" style="background-color: #e1e1e1;"> 
-                <ul>
-                    <li><a href="">Todos</a></li>
-                    <li><a href="">Inversores</a></li>
-                    <li><a href="">Placas</a></li>
-                    <li><a href="">Baterias</a></li>
-                    <li><a href="">Componentes</a></li>
-                </ul>
-    
-            </div>
-            <div class="w-75 min-vh-100 bg-danger container">
-                <div class="row h-50">
-                  <div class="bg-warning w-25 col">asd</div>
-                  <div class="bg-success w-25 col">ass</div>
-                  <div class="bg-warning w-25 col">asa</div>
+    <main>
+        <div style="margin-left:20px; margin-top: 10px;">
+            <!-- Aqui Devemos criar um foreach, para componentizar os produtos -->
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="componente-produto">
+                        <img src="https://images.kabum.com.br/produtos/fotos/688153/kit-com-3-ventoinhas-corsair-lx-rgb-series-icue-link-lx120-120mm-branco-co-9051030-ww_1738240035_m.jpg"
+                            alt="Ventoinha Rise Mode Galaxy Led" class="imagem-produto">
+                        <h2 class="informacao">Ventoinha Rise Mode Galaxy Led, 120mm, Branco</h2>
+                        <p class="informacao"><strong>Modelo:</strong> RM-FN-01-BW</p>
+                        <p class="informacao preco">R$ 11,99</p>
+                        <p class="informacao">À vista no PIX</p>
+                        <p class="informacao">ou até 1x de R$ 12,70</p>
+                        <button style="background-color: #e44d26; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer;">COMPRAR</button>
+                    </div>
                 </div>
-                <div class="row h-50">
-                  <div class="bg-success w-25 col">sds</div>
-                  <div class="bg-warning w-25 col">ada</div>
-                  <div class="bg-success w-25 col">sad</div>
+                <div class="col-md-3">
+                    <div class="componente-produto">
+                        <img src="https://images.kabum.com.br/produtos/fotos/688153/kit-com-3-ventoinhas-corsair-lx-rgb-series-icue-link-lx120-120mm-branco-co-9051030-ww_1738240035_m.jpg"
+                            alt="Ventoinha Rise Mode Galaxy Led" class="imagem-produto">
+                        <h2 class="informacao">Ventoinha Rise Mode Galaxy Led, 120mm, Branco</h2>
+                        <p class="informacao"><strong>Modelo:</strong> RM-FN-01-BW</p>
+                        <p class="informacao preco">R$ 11,99</p>
+                        <p class="informacao">À vista no PIX</p>
+                        <p class="informacao">ou até 1x de R$ 12,70</p>
+                        <button style="background-color: #e44d26; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer;">COMPRAR</button>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="componente-produto">
+                        <img src="https://images.kabum.com.br/produtos/fotos/688153/kit-com-3-ventoinhas-corsair-lx-rgb-series-icue-link-lx120-120mm-branco-co-9051030-ww_1738240035_m.jpg"
+                            alt="Ventoinha Rise Mode Galaxy Led" class="imagem-produto">
+                        <h2 class="informacao">Ventoinha Rise Mode Galaxy Led, 120mm, Branco</h2>
+                        <p class="informacao"><strong>Modelo:</strong> RM-FN-01-BW</p>
+                        <p class="informacao preco">R$ 11,99</p>
+                        <p class="informacao">À vista no PIX</p>
+                        <p class="informacao">ou até 1x de R$ 12,70</p>
+                        <button style="background-color: #e44d26; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer;">COMPRAR</button>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="componente-produto">
+                        <img src="https://images.kabum.com.br/produtos/fotos/688153/kit-com-3-ventoinhas-corsair-lx-rgb-series-icue-link-lx120-120mm-branco-co-9051030-ww_1738240035_m.jpg"
+                            alt="Ventoinha Rise Mode Galaxy Led" class="imagem-produto">
+                        <h2 class="informacao">Ventoinha Rise Mode Galaxy Led, 120mm, Branco</h2>
+                        <p class="informacao"><strong>Modelo:</strong> RM-FN-01-BW</p>
+                        <p class="informacao preco">R$ 11,99</p>
+                        <p class="informacao">À vista no PIX</p>
+                        <p class="informacao">ou até 1x de R$ 12,70</p>
+                        <button style="background-color: #e44d26; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer;">COMPRAR</button>
+                    </div>
                 </div>
             </div>
-    
-        </main>
-        <?php require_once 'components/footer.php'; ?>
-    </body>
+
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="componente-produto">
+                        <img src="https://images.kabum.com.br/produtos/fotos/688153/kit-com-3-ventoinhas-corsair-lx-rgb-series-icue-link-lx120-120mm-branco-co-9051030-ww_1738240035_m.jpg"
+                            alt="Ventoinha Rise Mode Galaxy Led" class="imagem-produto">
+                        <h2 class="informacao">Ventoinha Rise Mode Galaxy Led, 120mm, Branco</h2>
+                        <p class="informacao"><strong>Modelo:</strong> RM-FN-01-BW</p>
+                        <p class="informacao preco">R$ 11,99</p>
+                        <p class="informacao">À vista no PIX</p>
+                        <p class="informacao">ou até 1x de R$ 12,70</p>
+                        <button style="background-color: #e44d26; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer;">COMPRAR</button>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="componente-produto">
+                        <img src="https://images.kabum.com.br/produtos/fotos/688153/kit-com-3-ventoinhas-corsair-lx-rgb-series-icue-link-lx120-120mm-branco-co-9051030-ww_1738240035_m.jpg"
+                            alt="Ventoinha Rise Mode Galaxy Led" class="imagem-produto">
+                        <h2 class="informacao">Ventoinha Rise Mode Galaxy Led, 120mm, Branco</h2>
+                        <p class="informacao"><strong>Modelo:</strong> RM-FN-01-BW</p>
+                        <p class="informacao preco">R$ 11,99</p>
+                        <p class="informacao">À vista no PIX</p>
+                        <p class="informacao">ou até 1x de R$ 12,70</p>
+                        <button style="background-color: #e44d26; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer;">COMPRAR</button>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="componente-produto">
+                        <img src="https://images.kabum.com.br/produtos/fotos/688153/kit-com-3-ventoinhas-corsair-lx-rgb-series-icue-link-lx120-120mm-branco-co-9051030-ww_1738240035_m.jpg"
+                            alt="Ventoinha Rise Mode Galaxy Led" class="imagem-produto">
+                        <h2 class="informacao">Ventoinha Rise Mode Galaxy Led, 120mm, Branco</h2>
+                        <p class="informacao"><strong>Modelo:</strong> RM-FN-01-BW</p>
+                        <p class="informacao preco">R$ 11,99</p>
+                        <p class="informacao">À vista no PIX</p>
+                        <p class="informacao">ou até 1x de R$ 12,70</p>
+                        <button style="background-color: #e44d26; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer;">COMPRAR</button>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="componente-produto">
+                        <img src="https://images.kabum.com.br/produtos/fotos/688153/kit-com-3-ventoinhas-corsair-lx-rgb-series-icue-link-lx120-120mm-branco-co-9051030-ww_1738240035_m.jpg"
+                            alt="Ventoinha Rise Mode Galaxy Led" class="imagem-produto">
+                        <h2 class="informacao">Ventoinha Rise Mode Galaxy Led, 120mm, Branco</h2>
+                        <p class="informacao"><strong>Modelo:</strong> RM-FN-01-BW</p>
+                        <p class="informacao preco">R$ 11,99</p>
+                        <p class="informacao">À vista no PIX</p>
+                        <p class="informacao">ou até 1x de R$ 12,70</p>
+                        <button style="background-color: #e44d26; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer;">COMPRAR</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <?php include_once 'components/footer.php'; ?>
+</body>
+
 </html>
