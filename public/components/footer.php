@@ -1,4 +1,4 @@
-<footer class="text-center fixed-bottom" style="background-color: #F28705;">
+<footer class="text-center" style="background-color: #F28705;">
     <div class="text-center p-3">
         © 2025 Copyright: ProgWeb 2025/1
     </div>
