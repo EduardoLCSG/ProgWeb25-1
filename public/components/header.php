@@ -4,7 +4,7 @@
 <header>
     <nav class="navbar navbar-expand-lg" style="background-color: #F28705;">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">Solar</a>
+            <a class="navbar-brand" href="../">Solar</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -12,17 +12,17 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Home</a>
+                        <a class="nav-link active" aria-current="page" href="../">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Calculadora</a>
+                        <a class="nav-link" href="../pages/calculadora.php">Calculadora</a>
                     </li>
                 </ul>
             </div>
             <div class="collapse navbar-collapse d-flex flex-row-reverse" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Carrinho</a>
+                        <a class="nav-link" href="../pages/carrinho.php">Carrinho</a>
                     </li>
                     <li class="nav-item">
                         <a href="../pages/login.php" class="btn btn-outline-success">Login</a>

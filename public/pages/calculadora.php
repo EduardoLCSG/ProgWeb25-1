@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="pt-br">
 
 <head>
     <title>Solar</title>
@@ -8,12 +8,12 @@
 </head>
 
 <body class="w-100">
-    <?php require_once 'components/header.php'; ?>
+    <?php require_once '../components/header.php'; ?>
     <main class="m-2 d-flex" style="height: 640px;">
         <div class="w-25 h-100" style="background-color: #e1e1e1;"> </div>
         <div class="w-75 h-100 d-flex" style="background-color: #820e8d;"></div>
     </main>
-    <?php require_once 'components/footer.php'; ?>
+    <?php require_once '../components/footer.php'; ?>
 </body>
 
 </html>
