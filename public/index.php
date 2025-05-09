@@ -38,8 +38,8 @@
 
 <body class="w-100">
     <?php require_once 'components/header.php'; ?>
-    <main>
-        <div style="margin-left:20px; margin-top: 10px;">
+    <main class="container">
+        <div class="m-4">
             <!-- Aqui Devemos criar um foreach, para componentizar os produtos -->
             <div class="row">
                 <div class="col-md-3">
