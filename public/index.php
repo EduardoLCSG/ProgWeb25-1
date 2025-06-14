@@ -23,8 +23,8 @@ match ($path) {
     'home' => require ROOT_PATH . '/public/pages/home.php',
 
     'calculadora' => (function() {
-        require_once ROOT_PATH . '/server/controller/CalculadoraController.php';
-        $controller = new CalculadoraController();
+        require_once ROOT_PATH . '/server/controller/calculadoraController.php';
+        $controller = new calculadoraController();
         $controller->index();
     })(),
 
