@@ -8,12 +8,12 @@
 </head>
 
 <body class="w-100">
-    <?php require_once '../components/header.php'; ?>
+    <?php require_once ROOT_PATH . '/public/components/header.php'; ?>
     <main class="d-flex">
         <div class="w-25 h-100" style="background-color: #e1e1e1;">
         </div>
-        <div class="w-75 h-100 d-flex" style="background-color: #820e8d;">
-            <div class="m-4 w-50" style="background-color:rgb(230, 22, 22);">
+        <div class="w-75 h-100 d-flex" style="background-color: #a1a1a1;">
+            <div class="m-4 w-50" style="background-color: #e1e1e1;">
                 <div class="m-4">
                     <h2>Calculadora de Painéis Solares</h2>
                     <p>Calcule a quantidade de placas necessarias para o seu consumo mensal.</p>
@@ -123,7 +123,7 @@
                     </script>
                 </div>
             </div>
-            <div class="m-4 w-50" style="background-color:rgb(15, 209, 41);">
+            <div class="m-4 w-50" style="background-color:#e1e1e1;">
                 <div class="m-4">
                     <p>Você precisa de aproximadamente: <span id="resultado">--</span> painéis de 550W</p>
                     <p>Área necessária: <span id="area">--</span></p>
@@ -133,7 +133,7 @@
             </div>
         </div>
     </main>
-    <?php require_once '../components/footer.php'; ?>
+    <?php require_once ROOT_PATH . '/public/components/footer.php'; ?>
 </body>
 
 </html>
