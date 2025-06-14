@@ -47,5 +47,9 @@ match ($path) {
 
     // Adicione outras rotas aqui...
 
-    default => require ROOT_PATH . '/public/pages/404.php',
+    default => (function () {
+        require_once ROOT_PATH . '/server/controller/notFoundController.php';
+        $controller = new notFoundController();
+        $controller->index();
+    })(),
 };
