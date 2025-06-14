@@ -4,6 +4,8 @@
         <title>404</title>
     </head>
     <body>
-        <p>404 página não encontrada</p>
+        <?php require_once ROOT_PATH . '/public/components/header.php'; ?>
+        <h1>404 página não encontrada</h1>
+        <?php require_once ROOT_PATH . '/public/components/footer.php'; ?>
     </body>
 </html>
