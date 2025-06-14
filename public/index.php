@@ -20,11 +20,28 @@ if ($path === '') {
 
 // O roteamento agora é feito com base no caminho limpo
 match ($path) {
-    'home' => require ROOT_PATH . '/public/pages/home.php',
 
-    'calculadora' => (function() {
+    'home' => (function () {
+        require_once ROOT_PATH . '/server/controller/homeController.php';
+        $controller = new homeController();
+        $controller->index();
+    })(),
+
+    'calculadora' => (function () {
         require_once ROOT_PATH . '/server/controller/calculadoraController.php';
         $controller = new calculadoraController();
+        $controller->index();
+    })(),
+
+    'carrinho' => (function () {
+        require_once ROOT_PATH . '/server/controller/carrinhoController.php';
+        $controller = new carrinhoController();
+        $controller->index();
+    })(),
+
+    'login' => (function () {
+        require_once ROOT_PATH . '/server/controller/loginController.php';
+        $controller = new loginController();
         $controller->index();
     })(),
 
