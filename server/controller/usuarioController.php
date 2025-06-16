@@ -13,6 +13,69 @@ class UsuarioController
         $this->conn = $objDb->connect();
     }
 
+    public function createUser($nome, $email, $senha, $confirmar_senha, $termos)
+    {
+        try {
+            if (empty($nome) || empty($email) || empty($senha) || empty($confirmar_senha) || !isset($termos)) {
+                echo "
+    <script>
+        alert('Preencha todos os campos obrigatórios e aceite os termos de uso.');
+        window.location.href = '/login';
+    </script>
+    ";
+                return;
+            }
+
+            if ($senha !== $confirmar_senha) {
+                echo "
+    <script>
+        alert('As senhas não coincidem. Por favor, tente novamente.');
+        window.location.href = '/login';
+    </script>
+    ";
+                return;
+            }
+            // Hashear a senha
+            $senhaHash = password_hash($senha, PASSWORD_DEFAULT);
+
+            // Prepara a consulta SQL para inserir o novo usuário
+            $sql = "INSERT INTO usuarios (nome_completo, email, senha) VALUES (:nome, :email, :senha)";
+            $stmt = $this->conn->prepare($sql);
+
+            $stmt->execute([
+                ':nome' => $nome,
+                ':email' => $email,
+                ':senha' => $senhaHash
+            ]);
+
+            // Gera um script JavaScript para o alerta e redirecionamento
+            echo "
+    <script>
+        alert('Usuário cadastrado com sucesso!');
+        window.location.href = '/login';
+    </script>
+    ";
+        } catch (PDOException $e) {
+            // Tratar erros com alertas JavaScript
+
+            if ($e->getCode() == 23505) { // Código de violação de unicidade
+                $mensagem_erro = "Erro: O email informado já está cadastrado.";
+            } else {
+                $mensagem_erro = "Erro ao cadastrar o usuário: " . $e->getMessage();
+            }
+
+            // Gera um script para o alerta de erro e volta para a página de login
+            echo "
+    <script>
+        alert('$mensagem_erro');
+        window.location.href = '/login';
+    </script>
+    ";
+        }
+    }
+    
+    // Esses métodos estão comentados porque não são necessários para o funcionamento atual
+    /*
     public function getAllClient()
     {
         if (!isset($_SESSION["id_usuario"])) {
@@ -80,30 +143,8 @@ class UsuarioController
         }
     }
 
-    public function createUser($nome, $email)
+    public function getUsersByPage($offset, $limit)
     {
-        try {
-
-            // Prepara a consulta SQL para inserir o novo usuário
-            $sql = "INSERT INTO usuarios (nome, email) VALUES (:nome, :email)";
-            $stmt = $this->conn->prepare($sql);
-
-            $stmt->bindParam(':nome', $nome);
-            $stmt->bindParam(':email', $email);
-
-            // Executa a consulta e verifica se foi bem-sucedida
-            if ($stmt->execute()) {
-                return true;
-            } else {
-                return false;
-            }
-        } catch (Exception $e) {
-            error_log("Erro ao criar usuário: " . $e->getMessage());
-            return false;
-        }
-    }
-
-    public function getUsersByPage($offset, $limit) {
         $sql = "SELECT * FROM usuarios ORDER BY id ASC LIMIT :limit OFFSET :offset";
         $stmt = $this->conn->prepare($sql);
         $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
@@ -111,4 +152,5 @@ class UsuarioController
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+        */
 }

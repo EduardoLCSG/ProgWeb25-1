@@ -45,6 +45,18 @@ match ($path) {
         $controller->index();
     })(),
 
+    'createUser' => (function () {
+        require_once ROOT_PATH . '/server/controller/usuarioController.php';
+        $controller = new usuarioController();
+        $controller->createUser($nome = $_POST["nome"], $email = $_POST["email"], $senha = $_POST['senha'], $confirmar_senha = $_POST['confirmar_senha'], $termos = $_POST['termos']);
+    })(),
+
+    'autenticar' => (function () {
+        require_once ROOT_PATH . '/server/controller/autenticarController.php';
+        $controller = new autenticarController();
+        $controller->autenticarSenha($email = $_POST["loginEmail"], $senha = $_POST["loginSenha"]);
+    })(),
+
     // Adicione outras rotas aqui...
 
     default => (function () {
