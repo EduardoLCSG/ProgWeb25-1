@@ -29,107 +29,32 @@
 
 <main class="container">
     <div class="m-4">
-        <!-- Aqui Devemos criar um foreach, para componentizar os produtos -->
         <div class="row">
-            <div class="col-md-3">
-                <div class="componente-produto">
-                    <img src="https://images.kabum.com.br/produtos/fotos/688153/kit-com-3-ventoinhas-corsair-lx-rgb-series-icue-link-lx120-120mm-branco-co-9051030-ww_1738240035_m.jpg"
-                        alt="Ventoinha Rise Mode Galaxy Led" class="imagem-produto">
-                    <h2 class="informacao">Ventoinha Rise Mode Galaxy Led, 120mm, Branco</h2>
-                    <p class="informacao"><strong>Modelo:</strong> RM-FN-01-BW</p>
-                    <p class="informacao preco">R$ 11,99</p>
-                    <p class="informacao">À vista no PIX</p>
-                    <p class="informacao">ou até 1x de R$ 12,70</p>
-                    <button style="background-color: #e44d26; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer;">COMPRAR</button>
+            <?php if (empty($produtos)): ?>
+                <div class="col-12">
+                    <p>Nenhum produto encontrado no momento.</p>
                 </div>
-            </div>
-            <div class="col-md-3">
-                <div class="componente-produto">
-                    <img src="https://images.kabum.com.br/produtos/fotos/688153/kit-com-3-ventoinhas-corsair-lx-rgb-series-icue-link-lx120-120mm-branco-co-9051030-ww_1738240035_m.jpg"
-                        alt="Ventoinha Rise Mode Galaxy Led" class="imagem-produto">
-                    <h2 class="informacao">Ventoinha Rise Mode Galaxy Led, 120mm, Branco</h2>
-                    <p class="informacao"><strong>Modelo:</strong> RM-FN-01-BW</p>
-                    <p class="informacao preco">R$ 11,99</p>
-                    <p class="informacao">À vista no PIX</p>
-                    <p class="informacao">ou até 1x de R$ 12,70</p>
-                    <button style="background-color: #e44d26; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer;">COMPRAR</button>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="componente-produto">
-                    <img src="https://images.kabum.com.br/produtos/fotos/688153/kit-com-3-ventoinhas-corsair-lx-rgb-series-icue-link-lx120-120mm-branco-co-9051030-ww_1738240035_m.jpg"
-                        alt="Ventoinha Rise Mode Galaxy Led" class="imagem-produto">
-                    <h2 class="informacao">Ventoinha Rise Mode Galaxy Led, 120mm, Branco</h2>
-                    <p class="informacao"><strong>Modelo:</strong> RM-FN-01-BW</p>
-                    <p class="informacao preco">R$ 11,99</p>
-                    <p class="informacao">À vista no PIX</p>
-                    <p class="informacao">ou até 1x de R$ 12,70</p>
-                    <button style="background-color: #e44d26; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer;">COMPRAR</button>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="componente-produto">
-                    <img src="https://images.kabum.com.br/produtos/fotos/688153/kit-com-3-ventoinhas-corsair-lx-rgb-series-icue-link-lx120-120mm-branco-co-9051030-ww_1738240035_m.jpg"
-                        alt="Ventoinha Rise Mode Galaxy Led" class="imagem-produto">
-                    <h2 class="informacao">Ventoinha Rise Mode Galaxy Led, 120mm, Branco</h2>
-                    <p class="informacao"><strong>Modelo:</strong> RM-FN-01-BW</p>
-                    <p class="informacao preco">R$ 11,99</p>
-                    <p class="informacao">À vista no PIX</p>
-                    <p class="informacao">ou até 1x de R$ 12,70</p>
-                    <button style="background-color: #e44d26; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer;">COMPRAR</button>
-                </div>
-            </div>
-        </div>
+            <?php else: ?>
+                <?php foreach ($produtos as $produto): ?>
+                    <div class="col-md-3">
+                        <div class="componente-produto">
+                            <img src="/imagem.php?id=<?php echo htmlspecialchars($produto['id']); ?>"
+                                 alt="<?php echo htmlspecialchars($produto['nome']); ?>" class="imagem-produto">
 
-        <div class="row">
-            <div class="col-md-3">
-                <div class="componente-produto">
-                    <img src="https://images.kabum.com.br/produtos/fotos/688153/kit-com-3-ventoinhas-corsair-lx-rgb-series-icue-link-lx120-120mm-branco-co-9051030-ww_1738240035_m.jpg"
-                        alt="Ventoinha Rise Mode Galaxy Led" class="imagem-produto">
-                    <h2 class="informacao">Ventoinha Rise Mode Galaxy Led, 120mm, Branco</h2>
-                    <p class="informacao"><strong>Modelo:</strong> RM-FN-01-BW</p>
-                    <p class="informacao preco">R$ 11,99</p>
-                    <p class="informacao">À vista no PIX</p>
-                    <p class="informacao">ou até 1x de R$ 12,70</p>
-                    <button style="background-color: #e44d26; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer;">COMPRAR</button>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="componente-produto">
-                    <img src="https://images.kabum.com.br/produtos/fotos/688153/kit-com-3-ventoinhas-corsair-lx-rgb-series-icue-link-lx120-120mm-branco-co-9051030-ww_1738240035_m.jpg"
-                        alt="Ventoinha Rise Mode Galaxy Led" class="imagem-produto">
-                    <h2 class="informacao">Ventoinha Rise Mode Galaxy Led, 120mm, Branco</h2>
-                    <p class="informacao"><strong>Modelo:</strong> RM-FN-01-BW</p>
-                    <p class="informacao preco">R$ 11,99</p>
-                    <p class="informacao">À vista no PIX</p>
-                    <p class="informacao">ou até 1x de R$ 12,70</p>
-                    <button style="background-color: #e44d26; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer;">COMPRAR</button>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="componente-produto">
-                    <img src="https://images.kabum.com.br/produtos/fotos/688153/kit-com-3-ventoinhas-corsair-lx-rgb-series-icue-link-lx120-120mm-branco-co-9051030-ww_1738240035_m.jpg"
-                        alt="Ventoinha Rise Mode Galaxy Led" class="imagem-produto">
-                    <h2 class="informacao">Ventoinha Rise Mode Galaxy Led, 120mm, Branco</h2>
-                    <p class="informacao"><strong>Modelo:</strong> RM-FN-01-BW</p>
-                    <p class="informacao preco">R$ 11,99</p>
-                    <p class="informacao">À vista no PIX</p>
-                    <p class="informacao">ou até 1x de R$ 12,70</p>
-                    <button style="background-color: #e44d26; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer;">COMPRAR</button>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="componente-produto">
-                    <img src="https://images.kabum.com.br/produtos/fotos/688153/kit-com-3-ventoinhas-corsair-lx-rgb-series-icue-link-lx120-120mm-branco-co-9051030-ww_1738240035_m.jpg"
-                        alt="Ventoinha Rise Mode Galaxy Led" class="imagem-produto">
-                    <h2 class="informacao">Ventoinha Rise Mode Galaxy Led, 120mm, Branco</h2>
-                    <p class="informacao"><strong>Modelo:</strong> RM-FN-01-BW</p>
-                    <p class="informacao preco">R$ 11,99</p>
-                    <p class="informacao">À vista no PIX</p>
-                    <p class="informacao">ou até 1x de R$ 12,70</p>
-                    <button style="background-color: #e44d26; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer;">COMPRAR</button>
-                </div>
-            </div>
+                            <h2 class="informacao"><?php echo htmlspecialchars($produto['nome']); ?></h2>
+
+                            <?php if (!empty($produto['descricao'])): ?>
+                                <p class="informacao"><?php echo htmlspecialchars($produto['descricao']); ?></p>
+                            <?php endif; ?>
+
+                            <p class="informacao preco">R$ <?php echo number_format($produto['preco'], 2, ',', '.'); ?></p>
+                            
+                            <p class="informacao">À vista no PIX</p>
+                            <button style="background-color: #e44d26; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer;">COMPRAR</button>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+                <?php endif; ?>
         </div>
     </div>
 </main>
