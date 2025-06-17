@@ -33,7 +33,7 @@
             </div>
         </div>
     </nav>
-    <div class="w-100" style="background-image: url('/src/images/transporte-home.jpg'); background-size: cover;
+    <div class="w-100" style="background-image: url('/assets/images/transporte-home.jpg'); background-size: cover;
     background-position: center; background-repeat: no-repeat; clip-path: inset(0% 0% 0% 0%);
     height: 15vh; margin: 0; padding: 0;">
     </div>

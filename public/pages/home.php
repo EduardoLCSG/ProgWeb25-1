@@ -1,4 +1,5 @@
 <style>
+    /* Seu CSS continua o mesmo */
     .componente-produto {
         border: 1px solid #ccc;
         padding: 15px;
@@ -29,8 +30,7 @@
                         <div class="componente-produto">
                             <?php
                                 // Define o caminho da imagem padrão
-                                $caminhoImagemPadrao = ROOT_PATH.'\public\assets\images\default.jpg';
-                                echo $caminhoImagemPadrao;
+                                $caminhoImagemPadrao = '/assets/images/default.jpg';
                                 
                                 // Verifica se o produto tem um caminho de imagem e se o arquivo existe
                                 if (!empty($produto['imagem_path']) && file_exists(ROOT_PATH . '/public' . $produto['imagem_path'])) {
@@ -48,7 +48,7 @@
                             <?php if (!empty($produto['descricao'])): ?>
                                 <p class="informacao"><?php echo htmlspecialchars($produto['descricao']); ?></p>
                             <?php endif; ?>
-
+                            
                             <p class="informacao preco">R$ <?php echo number_format($produto['preco'], 2, ',', '.'); ?></p>
                             
                             <p class="informacao">À vista no PIX</p>

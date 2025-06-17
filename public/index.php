@@ -32,6 +32,20 @@ if (isset($_SESSION['autenticado']) && $_SESSION['autenticado'] === true) {
  */
 define('ROOT_PATH', dirname(__DIR__));
 
+$request_uri = $_SERVER['REQUEST_URI'];
+
+// Remove query strings (ex: ?param=valor) para obter o caminho do arquivo.
+$request_path = parse_url($request_uri, PHP_URL_PATH);
+
+// Constrói o caminho completo para o arquivo no sistema de arquivos.
+$file_path = ROOT_PATH . '/public' . $request_path; // Ajuste '/public' se suas imagens estiverem em outra pasta.
+
+// Se o caminho da requisição aponta para um arquivo existente,
+// informa ao servidor web para servi-lo diretamente e para a execução do script.
+if (is_file($file_path)) {
+    return false;
+}
+
 // Pega a URI da requisição, por ex: "/calculadora" ou "/contato"
 $uri = $_SERVER['REQUEST_URI'];
 
