@@ -73,102 +73,72 @@ class UsuarioController
     ";
         }
     }
+    public function autenticar($email, $senha)
+    {
+
+        if($this->validaSenha($email, $senha)){
+            header("Location: /home");
+            exit();
+        }
+        else {
+            // Se a autenticação falhar, redireciona de volta para a página de login com uma mensagem de erro
+            echo "    <script>
+                alert('E-mail ou senha incorretos. Por favor, tente novamente.');
+                window.location.href = '/login';
+            </script>
+            ";
+        }
+    }
+
+    public function validaSenha(string $loginEmail, string $loginSenha): bool
+{
+    
+
+    try {
+        // 1. BUSCAR O USUÁRIO PELO E-MAIL (única consulta necessária)
+        $sql = "SELECT id, nome_completo, email, senha FROM usuarios WHERE email = :email";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindParam(":email", $loginEmail);
+        $stmt->execute();
+        $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        // 2. VERIFICAR A SENHA E AUTENTICAR
+        // Verifica se um usuário foi encontrado E se a senha fornecida corresponde ao hash no banco.
+        if ($usuario && password_verify($loginSenha, $usuario['senha'])) {
+            // Autenticação bem-sucedida!
+
+            // Regenera o ID da sessão para segurança contra "session fixation".
+            session_regenerate_id(true);
+
+            // 3. ARMAZENAR DADOS NA SESSÃO
+            $_SESSION['usuario_id'] = $usuario['id'];
+            $_SESSION['usuario_nome'] = $usuario['nome_completo'];
+            $_SESSION['usuario_email'] = $usuario['email'];
+            $_SESSION['autenticado'] = true;
+            $_SESSION['last_activity'] = time();
+
+            return true; // Retorna SUCESSO
+        }
+
+        // Se o usuário não existe ou a senha está incorreta, a função continua e retorna falha.
+        return false; // Retorna FALHA
+
+    } catch (Exception $e) {
+        // Em um ambiente de produção, grave este erro em um log em vez de exibi-lo.
+        error_log('Erro ao validar usuário: ' . $e->getMessage());
+        return false; // Retorna FALHA em caso de exceção
+    }
+}
 
     public function logout()
-    {
-        // Inicia a sessão
-        session_start();
-
-        // Destrói a sessão
+    {       
+        // Destrói todas as variáveis da sessão
+        session_unset();
         session_destroy();
 
-        // Redireciona para a página de login
-        echo "
-    <script>
-        alert('Logout realizado com sucesso!');
-        window.location.href = '/home';
-    </script>
-    ";
+        // Redireciona para a página de home após o logout
+        header("Location: /home");
+        exit();
     }
 
-
-    // Esses métodos estão comentados porque não são necessários para o funcionamento atual
-    /*
-    public function getAllClient()
-    {
-        if (!isset($_SESSION["id_usuario"])) {
-            $errorMsg = 'Acesso negado. Usuário não autenticado.';
-            return false;
-        }
-        try {
-            $sql = "SELECT * FROM usuarios";
-            $db = $this->conn->prepare($sql);
-            $db->execute();
-            $users = $db->fetchAll(PDO::FETCH_ASSOC);
-            return $users;
-        } catch (Exception $e) {
-            $errorMsg = $e->getMessage();
-            return false;
-        }
-    }
-
-    public function getUserById($id)
-    {
-        try {
-            // Prepara e executa a consulta
-            $sql = "SELECT * FROM usuarios WHERE id = :id";
-            $stmt = $this->conn->prepare($sql);
-            $stmt->bindParam(':id', $id);
-            $stmt->execute();
-
-            // Retorna o usuário encontrado, ou `false` se não houver resultado
-            $user = $stmt->fetch(PDO::FETCH_ASSOC);
-            return $user ?: false;
-        } catch (Exception $e) {
-            error_log("Erro ao buscar usuário: " . $e->getMessage());
-            return false;
-        }
-    }
-
-    public function updateUser($id, $nome, $email)
-    {
-        try {
-            // Prepara e executa a atualização
-            $sql = "UPDATE usuarios SET nome = :nome, email = :email WHERE id = :id";
-            $stmt = $this->conn->prepare($sql);
-            $stmt->bindParam(':id', $id);
-            $stmt->bindParam(':nome', $nome);
-            $stmt->bindParam(':email', $email);
-
-            // Retorna `true` se a atualização foi bem-sucedida, `false` caso contrário
-            return $stmt->execute();
-        } catch (Exception $e) {
-            error_log("Erro ao atualizar usuário: " . $e->getMessage());
-            return false;
-        }
-    }
-    public function deleteUser($id)
-    {
-        try {
-            // Prepara e executa a atualização
-            $sql = "DELETE FROM usuarios WHERE id = :id";
-            $stmt = $this->conn->prepare($sql);
-            $stmt->bindParam(':id', $id);
-            return $stmt->execute();
-        } catch (Exception $e) {
-            error_log("Erro ao atualizar usuário: " . $e->getMessage());
-            return false;
-        }
-    }
-
-    public function getUsersByPage($offset, $limit)
-    {
-        $sql = "SELECT * FROM usuarios ORDER BY id ASC LIMIT :limit OFFSET :offset";
-        $stmt = $this->conn->prepare($sql);
-        $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
-        $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
-        $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
-        */
 }

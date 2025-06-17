@@ -1,5 +1,31 @@
 <?php
-// public/index.php
+
+// Inicia a sessão
+session_start();
+
+// Verifica se a sessão não expirou
+if (isset($_SESSION['autenticado']) && $_SESSION['autenticado'] === true) {
+    // Define o tempo limite de inatividade em segundos (5 minutos)
+    $inactive_timeout = 300; 
+
+    // Verifica se o timestamp da última atividade está definido
+    if (isset($_SESSION['last_activity'])) {
+        // Calcula o tempo de inatividade
+        $session_life = time() - $_SESSION['last_activity'];
+
+        // Se o tempo de inatividade for maior que o tempo limite
+        if ($session_life > $inactive_timeout) {
+            // Destrói a sessão e redireciona para o login
+            session_unset();
+            session_destroy();
+            header("Location: /login?motivo=expirado");
+            exit();
+        }
+    }
+    
+    // Se a sessão ainda estiver ativa, atualiza o timestamp da última atividade
+    $_SESSION['last_activity'] = time();
+}
 
 /**
  * Define uma constante global para o caminho raiz do projeto.
@@ -52,9 +78,9 @@ match ($path) {
     })(),
 
     'autenticar' => (function () {
-        require_once ROOT_PATH . '/server/controller/autenticarController.php';
-        $controller = new autenticarController();
-        $controller->autenticarSenha($email = $_POST["loginEmail"], $senha = $_POST["loginSenha"]);
+        require_once ROOT_PATH . '/server/controller/usuarioController.php';
+        $controller = new usuarioController();
+        $controller->autenticar($email = $_POST["loginEmail"], $senha = $_POST["loginSenha"]);
     })(),
 
     'logout' => (function () {
