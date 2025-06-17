@@ -73,7 +73,25 @@ class UsuarioController
     ";
         }
     }
-    
+
+    public function logout()
+    {
+        // Inicia a sessão
+        session_start();
+
+        // Destrói a sessão
+        session_destroy();
+
+        // Redireciona para a página de login
+        echo "
+    <script>
+        alert('Logout realizado com sucesso!');
+        window.location.href = '/home';
+    </script>
+    ";
+    }
+
+
     // Esses métodos estão comentados porque não são necessários para o funcionamento atual
     /*
     public function getAllClient()

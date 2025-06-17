@@ -57,6 +57,12 @@ match ($path) {
         $controller->autenticarSenha($email = $_POST["loginEmail"], $senha = $_POST["loginSenha"]);
     })(),
 
+    'logout' => (function () {
+        require_once ROOT_PATH . '/server/controller/usuarioController.php';
+        $controller = new usuarioController();
+        $controller->logout();
+    })(),
+
     // Adicione outras rotas aqui...
 
     default => (function () {

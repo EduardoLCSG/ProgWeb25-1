@@ -22,7 +22,12 @@
                         <a class="nav-link" href="/carrinho">Carrinho</a>
                     </li>
                     <li class="nav-item">
-                        <a href="/login" class="btn btn-outline-success">Login</a>
+                    <?php if (isset($_SESSION['autenticado'])):
+                        echo '<a href="/logout" class="btn btn-outline-danger">Logout</a>';
+                     else:
+                        echo '<a href="/login" class="btn btn-outline-success">Login</a>';
+                    endif;
+                    ?>
                     </li>
                 </ul>
             </div>
