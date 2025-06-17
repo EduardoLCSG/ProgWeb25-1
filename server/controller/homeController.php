@@ -5,12 +5,8 @@ class homeController
 {
     private $conn;
 
-    /**
-     * O construtor agora cria uma conexão com o banco de dados.
-     */
     public function __construct()
     {
-        // Supondo que você tenha uma classe Database que gerencia a conexão
         require_once ROOT_PATH . '/server/config/database/database.php';
         $objDb = new Database;
         $this->conn = $objDb->connect();
@@ -22,8 +18,8 @@ class homeController
      */
     public function getProdutos()
     {
-        // Seleciona os campos necessários, incluindo o ID para a imagem.
-        $sql = "SELECT id, nome, descricao, preco, imagem FROM produtos";
+        // Altere a consulta para buscar a nova coluna 'imagem_path'
+        $sql = "SELECT id, nome, descricao, preco, imagem_path FROM produtos";
         $stmt = $this->conn->prepare($sql);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
