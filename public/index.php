@@ -102,6 +102,11 @@ match ($path) {
         $controller = new usuarioController();
         $controller->logout();
     })(),
+    'adicionarItem' => (function () {
+        require_once ROOT_PATH . '/server/controller/carrinhoController.php';
+        $controller = new carrinhoController();
+        $controller->adicionarItem();
+    })(),
 
     // Adicione outras rotas aqui...
 
