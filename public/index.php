@@ -92,6 +92,7 @@ match ($path) {
     // Adicione outras rotas aqui...
 
     default => (function () {
+        http_response_code(404);
         require_once ROOT_PATH . '/server/controller/notFoundController.php';
         $controller = new notFoundController();
         $controller->index();
