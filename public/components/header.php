@@ -37,23 +37,4 @@
     background-position: center; background-repeat: no-repeat; clip-path: inset(0% 0% 0% 0%);
     height: 15vh; margin: 0; padding: 0;">
     </div>
-    <div class="w-100 p-3 d-flex justify-content-center" style="background-color:#bfbfbf;">
-        <ul class="nav nav-pills">
-            <li class="nav-item">
-                <a class="nav-link active" href="#">Todos</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Inversores</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Placas</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Baterias</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Componentes</a>
-            </li>
-        </ul>
-    </div>
 </header>

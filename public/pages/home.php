@@ -30,7 +30,32 @@
         object-fit: contain;
         margin-bottom: 10px;
     }
+
+    /* Adiciona estilo para o link de categoria ativo */
+    .nav-pills .nav-link.active {
+        background-color: #F28705;
+    }
 </style>
+
+<div class="w-100 p-3 d-flex justify-content-center categorias" style="background-color:#bfbfbf;">
+    <?php
+    // Pega a categoria da URL, ou define 'todos' como padrão
+    $categoriaFiltrada = $_GET['categoria_id'] ?? 'todos';
+    ?>
+    <ul class="nav nav-pills">
+        <li class="nav-item">
+            <a class="nav-link <?php if ($categoriaFiltrada == 'todos') echo 'active'; ?>" href="/home">Todos</a>
+        </li>
+        <?php foreach ($categorias as $categoria): ?>
+            <li class="nav-item">
+                <a class="nav-link <?php if ($categoriaFiltrada == $categoria['id']) echo 'active'; ?>"
+                    href="/home?categoria_id=<?php echo $categoria['id']; ?>">
+                    <?php echo htmlspecialchars($categoria['nome']); ?>
+                </a>
+            </li>
+        <?php endforeach; ?>
+    </ul>
+</div>
 
 <main class="container">
     <div class="m-4">
@@ -41,44 +66,44 @@
                 </div>
             <?php else: ?>
                 <?php foreach ($produtos as $produto): ?>
-                    <div class="col-md-3 mb-4">
-                        <div class="componente-produto">
-                            <?php
+                    <?php
+                    // CONDIÇÃO DE FILTRO: Mostra o produto apenas se...
+                    // 1. O filtro for 'todos' OU
+                    // 2. O categoria_id do produto for igual ao da URL
+                    if ($categoriaFiltrada == 'todos' || $produto['categoria_id'] == $categoriaFiltrada):
+                    ?>
+                        <div class="col-md-3 mb-4">
+                            <div class="componente-produto">
+                                <?php
                                 // Define o caminho da imagem padrão
                                 $caminhoImagemPadrao = '/assets/images/default.jpg';
-                                
+
                                 // Verifica se o produto tem um caminho de imagem e se o arquivo existe
                                 if (!empty($produto['imagem_path']) && file_exists(ROOT_PATH . '/public' . $produto['imagem_path'])) {
                                     $caminhoImagem = $produto['imagem_path'];
                                 } else {
                                     $caminhoImagem = $caminhoImagemPadrao;
                                 }
-                            ?>
-                            
-                            <img src="<?php echo htmlspecialchars($caminhoImagem); ?>"
-                                alt="<?php echo htmlspecialchars($produto['nome']); ?>" class="imagem-produto">
+                                ?>
 
-                            <h2 class="informacao"><?php echo htmlspecialchars($produto['nome']); ?></h2>
-                            
-                            <?php if (!empty($produto['descricao'])): ?>
-                                <p class="informacao"><?php echo htmlspecialchars($produto['descricao']); ?></p>
-                            <?php endif; ?>
-
-                            <p class="informacao preco">R$ <?php echo number_format($produto['preco'], 2, ',', '.'); ?></p>
-
-                            <form action="/adicionarItem" method="post" class="mt-auto">
-                                <input type="hidden" name="produto_id" value="<?php echo $produto['id']; ?>">
-
-                                <div class="d-flex align-items-center mb-2">
-                                    <label for="quantidade-<?php echo $produto['id']; ?>" class="me-2">Qtd:</label>
-                                    <input type="number" name="quantidade" id="quantidade-<?php echo $produto['id']; ?>" value="1" min="1" class="form-control" style="width: 70px;">
-                                </div>
-
-                                <button type="submit" class="btn btn-primary w-100" style="background-color: #e44d26; border: none;">Adicionar ao Carrinho</button>
-                            </form>
+                                <img src="<?php echo htmlspecialchars($caminhoImagem); ?>"
+                                    alt="<?php echo htmlspecialchars($produto['nome']); ?>" class="imagem-produto">
+                                <h2 class="informacao"><?php echo htmlspecialchars($produto['nome']); ?></h2>
+                                <p class="informacao preco">R$ <?php echo number_format($produto['preco'], 2, ',', '.'); ?></p>
+                                <form action="/adicionarItem" method="post" class="mt-auto">
+                                    <input type="hidden" name="produto_id" value="<?php echo $produto['id']; ?>">
+                                    <div class="d-flex align-items-center mb-2">
+                                        <label for="quantidade-<?php echo $produto['id']; ?>" class="me-2">Qtd:</label>
+                                        <input type="number" name="quantidade" id="quantidade-<?php echo $produto['id']; ?>" value="1" min="1" class="form-control" style="width: 70px;">
+                                    </div>
+                                    <button type="submit" class="btn btn-primary w-100" style="background-color: #e44d26; border: none;">Adicionar ao Carrinho</button>
+                                </form>
+                            </div>
                         </div>
-                    </div>
-                <?php endforeach; ?>
+                <?php
+                    endif; // Fim da condição de filtro
+                endforeach; // Fim do loop de produtos 
+                ?>
             <?php endif; ?>
         </div>
     </div>

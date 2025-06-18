@@ -12,14 +12,19 @@ class homeController
         $this->conn = $objDb->connect();
     }
 
-    /**
-     * Busca todos os produtos no banco de dados.
-     * @return array Lista de produtos.
-     */
     public function getProdutos()
     {
-        // Altere a consulta para buscar a nova coluna 'imagem_path'
-        $sql = "SELECT id, nome, descricao, preco, imagem_path FROM produtos";
+        // Esta consulta já está correta, não precisa mudar
+        $sql = "SELECT p.id, p.nome, p.descricao, p.preco, p.imagem_path, p.categoria_id 
+                FROM produtos p";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+    
+    public function getCategorias()
+    {
+        $sql = "SELECT id, nome FROM categorias ORDER BY nome ASC";
         $stmt = $this->conn->prepare($sql);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -27,14 +32,14 @@ class homeController
 
     public function index()
     {
-        // PASSO 1: Busca os produtos do banco de dados chamando o método getProdutos.
+        // Busca tanto os produtos quanto as categorias
         $produtos = $this->getProdutos();
+        $categorias = $this->getCategorias(); // NOVO
 
-        // PASSO 2: Define o caminho da view que o layout irá carregar.
+        // Define o caminho da view
         $view = ROOT_PATH . '/public/pages/home.php';
-
-        // PASSO 3: Chama o layout principal.
-        // A variável $produtos estará disponível dentro de 'layout.php' e, consequentemente, em 'home.php'.
+        
+        // Carrega o layout, que terá acesso a $produtos e $categorias
         require_once ROOT_PATH . '/public/components/layout.php';
     }
 }
