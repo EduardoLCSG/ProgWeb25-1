@@ -65,10 +65,6 @@
                         <input type="checkbox" class="form-check-input" id="termosDeUso" required>
                         <label class="form-check-label" for="termosDeUso">Concordo com termos de uso.</label>
                     </div>
-                    <div class="mb-3 form-check">
-                        <input type="checkbox" class="form-check-input" id="tenhoInteresse">
-                        <label class="form-check-label" for="tenhoInteresse">Tenho interesse em receber contatos, promoções e notícias.</label>
-                    </div>
                     <button type="button" onclick="calcular()" class="btn btn-primary">Calcular</button>
                 </form>
 

@@ -1,16 +1,14 @@
 <?php
 // server/controller/carrinhoController.php
 
-class CarrinhoController
-{
-    private $conn;
+require_once ROOT_PATH . '/server/controller/baseController.php';
 
+class carrinhoController extends baseController // <-- Herda de BaseController
+{
     public function __construct()
     {
-        // Garante a conexão com o banco de dados ao instanciar o controller
-        require_once ROOT_PATH . '/server/config/database/database.php';
-        $objDb = new Database;
-        $this->conn = $objDb->connect();
+        // Chama o construtor da classe pai para inicializar a conexão
+        parent::__construct(); 
     }
 
     /**

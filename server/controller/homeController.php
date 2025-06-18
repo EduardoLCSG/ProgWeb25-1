@@ -1,15 +1,14 @@
 <?php
 // server/controller/homeController.php
 
-class homeController
-{
-    private $conn;
+require_once ROOT_PATH . '/server/controller/baseController.php';
 
+class homeController extends baseController // <-- Herda de BaseController
+{
     public function __construct()
     {
-        require_once ROOT_PATH . '/server/config/database/database.php';
-        $objDb = new Database;
-        $this->conn = $objDb->connect();
+        // Chama o construtor da classe pai para inicializar a conexão
+        parent::__construct(); 
     }
 
     public function getProdutos()

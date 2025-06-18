@@ -1,16 +1,14 @@
 <?php
 
 // include_once __DIR__ . '/../config/database/database.php';
-require_once __DIR__ . '/../config/database/database.php';
+require_once ROOT_PATH . '/server/controller/baseController.php';
 
-class UsuarioController
+class usuarioController extends baseController // <-- Herda de BaseController
 {
-    private $conn;
-
     public function __construct()
     {
-        $objDb = new Database;
-        $this->conn = $objDb->connect();
+        // Chama o construtor da classe pai para inicializar a conexão
+        parent::__construct(); 
     }
 
     public function createUser($nome, $email, $senha, $confirmar_senha, $termos)
