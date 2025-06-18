@@ -5,8 +5,8 @@ session_start();
 
 // Verifica se a sessão não expirou
 if (isset($_SESSION['autenticado']) && $_SESSION['autenticado'] === true) {
-    // Define o tempo limite de inatividade em segundos (5 minutos)
-    $inactive_timeout = 300; 
+    // Define o tempo limite de inatividade em segundos (1 hora)
+    $inactive_timeout = 3600;
 
     // Verifica se o timestamp da última atividade está definido
     if (isset($_SESSION['last_activity'])) {
@@ -102,10 +102,23 @@ match ($path) {
         $controller = new usuarioController();
         $controller->logout();
     })(),
+
     'adicionarItem' => (function () {
         require_once ROOT_PATH . '/server/controller/carrinhoController.php';
         $controller = new carrinhoController();
         $controller->adicionarItem();
+    })(),
+
+    'removerItem' => (function () {
+        require_once ROOT_PATH . '/server/controller/carrinhoController.php';
+        $controller = new carrinhoController();
+        $controller->removerItem();
+    })(),
+
+    'diminuirItem' => (function () {
+        require_once ROOT_PATH . '/server/controller/carrinhoController.php';
+        $controller = new carrinhoController();
+        $controller->diminuirItem();
     })(),
 
     // Adicione outras rotas aqui...

@@ -23,7 +23,7 @@
   <div class="w-75 ms-4">
     <h3>Meu Carrinho</h3>
     <hr>
-    
+
     <?php if (empty($itens)): ?>
       <div class="alert alert-info">
         Seu carrinho está vazio.
@@ -44,22 +44,42 @@
               }
               ?>
               <img src="<?php echo htmlspecialchars($caminhoImagem); ?>"
-              class="img-fluid rounded-start"
-              alt="<?php echo htmlspecialchars($item['nome']); ?>" style="max-height: 120px; object-fit: contain;">
+                class="img-fluid rounded-start"
+                alt="<?php echo htmlspecialchars($item['nome']); ?>" style="max-height: 120px; object-fit: contain;">
             </div>
             <div class="col-md-10">
               <div class="card-body">
-                <h5 class="card-title"><?php echo htmlspecialchars($item['nome']); ?></h5>
-                <p class="card-text mb-1">
-                  <strong>Preço Unitário:</strong> R$ <?php echo number_format($item['preco_unitario'], 2, ',', '.'); ?>
-                </p>
-                <p class="card-text mb-1">
-                  <strong>Quantidade:</strong> <?php echo htmlspecialchars($item['quantidade']); ?>
-                </p>
-                <p class="card-text">
-                  <strong>Subtotal:</strong> R$ <?php echo number_format($item['quantidade'] * $item['preco_unitario'], 2, ',', '.'); ?>
-                </p>
+                <div class="d-flex justify-content-between">
+                  <h5 class="card-title"><?php echo htmlspecialchars($item['nome']); ?></h5>
+                  <p class="card-text">
+                    <strong>Subtotal: R$ <?php echo number_format($item['quantidade'] * $item['preco_unitario'], 2, ',', '.'); ?></strong>
+                  </p>
                 </div>
+                <p class="card-text mb-1">
+                  <small class="text-muted">Preço Unitário: R$ <?php echo number_format($item['preco_unitario'], 2, ',', '.'); ?></small>
+                </p>
+
+                <div class="d-flex align-items-center mt-2">
+                  <span class="me-2">Quantidade:</span>
+                  <form action="/diminuirItem" method="post" class="me-2">
+                    <input type="hidden" name="item_id" value="<?php echo $item['item_id']; ?>">
+                    <button type="submit" class="btn btn-secondary btn-sm">-</button>
+                  </form>
+
+                  <span class="mx-2"><?php echo htmlspecialchars($item['quantidade']); ?></span>
+
+                  <form action="/adicionarItem" method="post">
+                    <input type="hidden" name="produto_id" value="<?php echo $item['produto_id']; ?>">
+                    <input type="hidden" name="quantidade" value="1">
+                    <button type="submit" class="btn btn-secondary btn-sm">+</button>
+                  </form>
+
+                  <form action="/removerItem" method="post" class="ms-auto">
+                    <input type="hidden" name="item_id" value="<?php echo $item['item_id']; ?>">
+                    <button type="submit" class="btn btn-outline-danger btn-sm">Remover</button>
+                  </form>
+                </div>
+              </div>
             </div>
           </div>
         </div>

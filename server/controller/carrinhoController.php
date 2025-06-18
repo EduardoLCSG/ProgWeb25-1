@@ -91,6 +91,104 @@ class CarrinhoController
         }
     }
 
+    // Adicione este método dentro da classe carrinhoController
+
+    public function diminuirItem()
+    {
+        // 1. Segurança: Verificar sessão e método POST
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST' || !isset($_SESSION['autenticado']) || $_SESSION['autenticado'] !== true) {
+            header('Location: /login');
+            exit();
+        }
+
+        // 2. Obter e validar o ID do item do carrinho
+        $itemId = filter_input(INPUT_POST, 'item_id', FILTER_VALIDATE_INT);
+        if (!$itemId) {
+            header('Location: /carrinho?erro=item_invalido');
+            exit();
+        }
+
+        try {
+            // 3. Obter o carrinho do usuário para verificação de segurança
+            $usuarioId = $_SESSION['usuario_id'];
+            $carrinhoId = $this->getOrCreateCarrinhoId($usuarioId);
+
+            // 4. Buscar a quantidade atual do item (e verificar se o item pertence ao carrinho do usuário)
+            $sqlVerifica = "SELECT quantidade FROM carrinho_itens WHERE id = :item_id AND carrinho_id = :carrinho_id";
+            $stmtVerifica = $this->conn->prepare($sqlVerifica);
+            $stmtVerifica->execute([':item_id' => $itemId, ':carrinho_id' => $carrinhoId]);
+            $item = $stmtVerifica->fetch(PDO::FETCH_ASSOC);
+
+            // 5. Lógica condicional: se item existe, decide se atualiza ou apaga
+            if ($item) {
+                if ($item['quantidade'] > 1) {
+                    // Se a quantidade for maior que 1, apenas diminui 1
+                    $sql = "UPDATE carrinho_itens SET quantidade = quantidade - 1 WHERE id = :item_id";
+                    $stmt = $this->conn->prepare($sql);
+                    $stmt->execute([':item_id' => $itemId]);
+                } else {
+                    // Se a quantidade for 1, remove o item completamente
+                    $sql = "DELETE FROM carrinho_itens WHERE id = :item_id";
+                    $stmt = $this->conn->prepare($sql);
+                    $stmt->execute([':item_id' => $itemId]);
+                }
+            }
+            
+            // 6. Redirecionar de volta para o carrinho
+            header('Location: /carrinho');
+            exit();
+
+        } catch (PDOException $e) {
+            error_log("Erro ao diminuir item do carrinho: " . $e->getMessage());
+            header('Location: /carrinho?erro=db');
+            exit();
+        }
+    }
+
+    public function removerItem()
+    {
+        // 1. Proteger a rota: verifica se o usuário está logado e se o método é POST
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST' || !isset($_SESSION['autenticado']) || $_SESSION['autenticado'] !== true) {
+            header('Location: /login');
+            exit();
+        }
+
+        // 2. Obter e validar o ID do item a ser removido
+        $itemId = filter_input(INPUT_POST, 'item_id', FILTER_VALIDATE_INT);
+
+        if (!$itemId) {
+            // Se o ID for inválido, redireciona de volta para o carrinho
+            header('Location: /carrinho?erro=item_invalido');
+            exit();
+        }
+
+        try {
+            // 3. Obter o ID do carrinho do usuário atual (para verificação de segurança)
+            $usuarioId = $_SESSION['usuario_id'];
+            $carrinhoId = $this->getOrCreateCarrinhoId($usuarioId);
+
+            // 4. Executar a exclusão SEGURA do item
+            // A cláusula "AND carrinho_id = :carrinho_id" é uma camada de segurança crucial.
+            // Ela garante que um usuário só possa remover itens do SEU PRÓPRIO carrinho.
+            $sql = "DELETE FROM carrinho_itens WHERE id = :item_id AND carrinho_id = :carrinho_id";
+            $stmt = $this->conn->prepare($sql);
+            
+            $stmt->execute([
+                ':item_id' => $itemId,
+                ':carrinho_id' => $carrinhoId
+            ]);
+
+            // 5. Redirecionar de volta para o carrinho para o usuário ver o resultado
+            header('Location: /carrinho');
+            exit();
+
+        } catch (PDOException $e) {
+            error_log("Erro ao remover item do carrinho: " . $e->getMessage());
+            header('Location: /carrinho?erro=db');
+            exit();
+        }
+    }
+
     private function getOrCreateCarrinhoId(int $usuarioId): int
     {
         // 1. Tenta encontrar um carrinho existente para o usuário
@@ -120,7 +218,9 @@ class CarrinhoController
      */
     private function getItensDoCarrinho(int $carrinhoId): array
     {
+        // ADICIONE "ci.id as item_id" à consulta SELECT
         $sql = "SELECT 
+                    ci.id as item_id, 
                     ci.produto_id,
                     ci.quantidade,
                     ci.preco_unitario,
