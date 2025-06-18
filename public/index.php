@@ -134,8 +134,8 @@ match ($path) {
     })(),
 
     'meusPedidos' => (function () {
-        require_once ROOT_PATH . '/server/controller/usuarioController.php';
-        $controller = new usuarioController();
+        require_once ROOT_PATH . '/server/controller/pedidoController.php';
+        $controller = new pedidoController();
         $controller->exibirPedidos();
     })(),
 
