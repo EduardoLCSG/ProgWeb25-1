@@ -1,5 +1,5 @@
 <style>
-    /* Seu CSS continua o mesmo */
+    
     .componente-produto {
         border: 1px solid #ccc;
         padding: 15px;

@@ -319,27 +319,6 @@ class carrinhoController extends baseController // <-- Herda de BaseController
         }
     }
 
-    public function exibirConfirmacao()
-    {
-        // Protege a página, só pode ser vista se um pedido acabou de ser feito
-        if (!isset($_SESSION['ultimo_pedido_id'])) {
-            header('Location: /home');
-            exit();
-        }
-
-        $pedidoId = $_SESSION['ultimo_pedido_id'];
-
-        // Aqui você pode buscar os dados do pedido recém-criado para exibir um resumo
-        // (Vou manter simples por enquanto, apenas exibindo o ID)
-        $viewData = ['pedido_id' => $pedidoId];
-        
-        // Limpa a variável da sessão para que a página não seja recarregada
-        unset($_SESSION['ultimo_pedido_id']);
-
-        $view = ROOT_PATH . '/public/pages/pedidoConfirmado.php';
-        require_once ROOT_PATH . '/public/components/layout.php';
-    }
-
     public function index()
     {
         // 1. Proteger a rota: verifica se o usuário está logado

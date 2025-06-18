@@ -18,7 +18,7 @@ if (isset($_SESSION['autenticado']) && $_SESSION['autenticado'] === true) {
             // Destrói a sessão e redireciona para o login
             session_unset();
             session_destroy();
-            header("Location: /login?motivo=expirado");
+            header("Location: /login");
             exit();
         }
     }
@@ -38,7 +38,7 @@ $request_uri = $_SERVER['REQUEST_URI'];
 $request_path = parse_url($request_uri, PHP_URL_PATH);
 
 // Constrói o caminho completo para o arquivo no sistema de arquivos.
-$file_path = ROOT_PATH . '/public' . $request_path; // Ajuste '/public' se suas imagens estiverem em outra pasta.
+$file_path = ROOT_PATH . '/public' . $request_path;
 
 // Se o caminho da requisição aponta para um arquivo existente,
 // informa ao servidor web para servi-lo diretamente e para a execução do script.
@@ -122,14 +122,14 @@ match ($path) {
     })(),
 
     'finalizarPedido' => (function () {
-        require_once ROOT_PATH . '/server/controller/carrinhoController.php'; // Pode ser um PedidoController no futuro
+        require_once ROOT_PATH . '/server/controller/carrinhoController.php';
         $controller = new carrinhoController();
         $controller->finalizarPedido();
     })(),
 
     'pedidoConfirmado' => (function () {
-        require_once ROOT_PATH . '/server/controller/carrinhoController.php';
-        $controller = new carrinhoController();
+        require_once ROOT_PATH . '/server/controller/pedidoController.php';
+        $controller = new pedidoController();
         $controller->exibirConfirmacao();
     })(),
 

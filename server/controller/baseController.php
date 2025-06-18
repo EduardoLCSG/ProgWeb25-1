@@ -1,5 +1,7 @@
 <?php
 // server/controller/BaseController.php
+//controlador base para reaproveitar código entre os controladores
+// Exemplo: conexão com o banco de dados
 
 class baseController 
 {
