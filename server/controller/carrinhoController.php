@@ -19,9 +19,76 @@ class CarrinhoController
      * @return int O ID do carrinho.
      */
 
-    public function adicionarItem(){
+    public function adicionarItem()
+    {
+        // 1. Proteger a rota: verifica se o usuário está logado e se o método é POST
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST' || !isset($_SESSION['autenticado']) || $_SESSION['autenticado'] !== true) {
+            header('Location: /login');
+            exit();
+        }
 
-        
+        // 2. Obter e validar os dados do formulário
+        $produtoId = filter_input(INPUT_POST, 'produto_id', FILTER_VALIDATE_INT);
+        $quantidade = filter_input(INPUT_POST, 'quantidade', FILTER_VALIDATE_INT);
+
+        if (!$produtoId || !$quantidade || $quantidade <= 0) {
+            // Se os dados forem inválidos, redireciona de volta para a home
+            header('Location: /home?erro=invalido');
+            exit();
+        }
+
+        try {
+            // 3. Obter ID do usuário e do carrinho
+            $usuarioId = $_SESSION['usuario_id'];
+            $carrinhoId = $this->getOrCreateCarrinhoId($usuarioId);
+
+            // 4. Obter o preço atual do produto para garantir consistência
+            $sqlProduto = "SELECT preco FROM produtos WHERE id = :produto_id";
+            $stmtProduto = $this->conn->prepare($sqlProduto);
+            $stmtProduto->execute([':produto_id' => $produtoId]);
+            $produto = $stmtProduto->fetch(PDO::FETCH_ASSOC);
+
+            if (!$produto) {
+                // Produto não existe
+                header('Location: /home?erro=produto_nao_existe');
+                exit();
+            }
+            $precoUnitario = $produto['preco'];
+
+            // 5. Verificar se o item já existe no carrinho
+            $sqlVerifica = "SELECT id, quantidade FROM carrinho_itens WHERE carrinho_id = :carrinho_id AND produto_id = :produto_id";
+            $stmtVerifica = $this->conn->prepare($sqlVerifica);
+            $stmtVerifica->execute([':carrinho_id' => $carrinhoId, ':produto_id' => $produtoId]);
+            $itemExistente = $stmtVerifica->fetch(PDO::FETCH_ASSOC);
+
+            if ($itemExistente) {
+                // Se existe, ATUALIZA a quantidade
+                $novaQuantidade = $itemExistente['quantidade'] + $quantidade;
+                $sql = "UPDATE carrinho_itens SET quantidade = :quantidade WHERE id = :id";
+                $stmt = $this->conn->prepare($sql);
+                $stmt->execute([':quantidade' => $novaQuantidade, ':id' => $itemExistente['id']]);
+            } else {
+                // Se não existe, INSERE um novo item
+                $sql = "INSERT INTO carrinho_itens (carrinho_id, produto_id, quantidade, preco_unitario) VALUES (:carrinho_id, :produto_id, :quantidade, :preco_unitario)";
+                $stmt = $this->conn->prepare($sql);
+                $stmt->execute([
+                    ':carrinho_id' => $carrinhoId,
+                    ':produto_id' => $produtoId,
+                    ':quantidade' => $quantidade,
+                    ':preco_unitario' => $precoUnitario
+                ]);
+            }
+
+            // 6. Redirecionar para a página do carrinho para o usuário ver o item adicionado
+            header('Location: /carrinho');
+            exit();
+
+        } catch (PDOException $e) {
+            // Em um ambiente real, você logaria o erro em vez de exibi-lo
+            error_log("Erro ao adicionar item ao carrinho: " . $e->getMessage());
+            header('Location: /home?erro=db'); // Informa que houve um erro
+            exit();
+        }
     }
 
     private function getOrCreateCarrinhoId(int $usuarioId): int

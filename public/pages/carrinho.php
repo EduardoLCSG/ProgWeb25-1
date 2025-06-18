@@ -33,10 +33,19 @@
         <div class="card mb-3">
           <div class="row g-0">
             <div class="col-md-2 d-flex align-items-center justify-content-center p-2">
+
               <?php
-                $caminhoImagem = !empty($item['imagem_path']) ? $item['imagem_path'] : '/assets/images/default.jpg';
+              // Define o caminho da imagem do item, se existir, ou usa a imagem padrão
+              $caminhoImagemPadrao = '/assets/images/default.jpg';
+              if (!empty($item['imagem_path']) && file_exists(ROOT_PATH . '/public' . $item['imagem_path'])) {
+                $caminhoImagem = $item['imagem_path'];
+              } else {
+                $caminhoImagem = $caminhoImagemPadrao;
+              }
               ?>
-              <img src="<?php echo htmlspecialchars($caminhoImagem); ?>" class="img-fluid rounded-start" alt="<?php echo htmlspecialchars($item['nome']); ?>" style="max-height: 120px; object-fit: contain;">
+              <img src="<?php echo htmlspecialchars($caminhoImagem); ?>"
+              class="img-fluid rounded-start"
+              alt="<?php echo htmlspecialchars($item['nome']); ?>" style="max-height: 120px; object-fit: contain;">
             </div>
             <div class="col-md-10">
               <div class="card-body">
