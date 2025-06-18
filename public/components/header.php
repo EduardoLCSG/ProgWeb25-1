@@ -18,17 +18,21 @@
             </div>
             <div class="collapse navbar-collapse d-flex flex-row-reverse" id="navbarNav">
                 <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/carrinho">Carrinho</a>
-                    </li>
-                    <li class="nav-item">
-                    <?php if (isset($_SESSION['autenticado'])):
-                        echo '<a href="/logout" class="btn btn-outline-danger">Logout</a>';
-                     else:
-                        echo '<a href="/login" class="btn btn-outline-success">Login</a>';
-                    endif;
-                    ?>
-                    </li>
+                    <?php if (isset($_SESSION['autenticado']) && $_SESSION['autenticado'] === true): ?>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/meusPedidos">Meus Pedidos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/carrinho">Carrinho</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/logout" class="btn btn-outline-danger">Logout</a>
+                        </li>
+                    <?php else: ?>
+                        <li class="nav-item">
+                            <a href="/login" class="btn btn-outline-success">Login</a>
+                        </li>
+                    <?php endif; ?>
                 </ul>
             </div>
         </div>

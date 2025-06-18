@@ -121,6 +121,24 @@ match ($path) {
         $controller->diminuirItem();
     })(),
 
+    'finalizarPedido' => (function () {
+        require_once ROOT_PATH . '/server/controller/carrinhoController.php'; // Pode ser um PedidoController no futuro
+        $controller = new carrinhoController();
+        $controller->finalizarPedido();
+    })(),
+
+    'pedidoConfirmado' => (function () {
+        require_once ROOT_PATH . '/server/controller/carrinhoController.php';
+        $controller = new carrinhoController();
+        $controller->exibirConfirmacao();
+    })(),
+
+    'meusPedidos' => (function () {
+        require_once ROOT_PATH . '/server/controller/usuarioController.php';
+        $controller = new usuarioController();
+        $controller->exibirPedidos();
+    })(),
+
     // Adicione outras rotas aqui...
 
     default => (function () {

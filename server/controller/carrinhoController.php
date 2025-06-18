@@ -239,6 +239,109 @@ class CarrinhoController
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    // Adicione este método dentro da classe carrinhoController
+
+    public function finalizarPedido()
+    {
+        // 1. Segurança: Garante que o usuário está logado e o método é POST
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST' || !isset($_SESSION['autenticado']) || !$_SESSION['autenticado']) {
+            header('Location: /login');
+            exit();
+        }
+
+        $usuarioId = $_SESSION['usuario_id'];
+        $carrinhoId = $this->getOrCreateCarrinhoId($usuarioId);
+        $itens = $this->getItensDoCarrinho($carrinhoId);
+
+        // Não prossiga se o carrinho estiver vazio
+        if (empty($itens)) {
+            header('Location: /carrinho');
+            exit();
+        }
+
+        try {
+            // 2. INICIA A TRANSAÇÃO: Todas as operações seguintes devem ter sucesso.
+            $this->conn->beginTransaction();
+
+            // 3. Calcula o total final e cria o pedido na tabela 'pedidos'
+            $totalPedido = 0;
+            foreach ($itens as $item) {
+                $totalPedido += $item['quantidade'] * $item['preco_unitario'];
+            }
+            
+            // Ignoramos endereco_id por enquanto
+            $sqlPedido = "INSERT INTO pedidos (usuario_id, total, status) VALUES (:usuario_id, :total, 'processando')";
+            $stmtPedido = $this->conn->prepare($sqlPedido);
+            $stmtPedido->execute([':usuario_id' => $usuarioId, ':total' => $totalPedido]);
+            $pedidoId = $this->conn->lastInsertId();
+
+            // 4. Move os itens do carrinho para a tabela 'pedido_itens' e atualiza o estoque
+            $sqlItemPedido = "INSERT INTO pedido_itens (pedido_id, produto_id, quantidade, preco_unitario) VALUES (:pedido_id, :produto_id, :quantidade, :preco_unitario)";
+            $sqlEstoque = "UPDATE produtos SET estoque = estoque - :quantidade WHERE id = :produto_id";
+            
+            foreach ($itens as $item) {
+                // Insere o item no pedido
+                $stmtItem = $this->conn->prepare($sqlItemPedido);
+                $stmtItem->execute([
+                    ':pedido_id' => $pedidoId,
+                    ':produto_id' => $item['produto_id'],
+                    ':quantidade' => $item['quantidade'],
+                    ':preco_unitario' => $item['preco_unitario']
+                ]);
+
+                // Atualiza o estoque do produto
+                $stmtEstoque = $this->conn->prepare($sqlEstoque);
+                $stmtEstoque->execute([
+                    ':quantidade' => $item['quantidade'],
+                    ':produto_id' => $item['produto_id']
+                ]);
+            }
+
+            // 5. Limpa o carrinho de compras do usuário
+            $sqlLimpaCarrinho = "DELETE FROM carrinho_itens WHERE carrinho_id = :carrinho_id";
+            $stmtLimpa = $this->conn->prepare($sqlLimpaCarrinho);
+            $stmtLimpa->execute([':carrinho_id' => $carrinhoId]);
+
+            // 6. EFETIVA A TRANSAÇÃO: Se tudo deu certo, salva as alterações no banco
+            $this->conn->commit();
+
+            // Guarda o ID do último pedido na sessão para a página de confirmação
+            $_SESSION['ultimo_pedido_id'] = $pedidoId;
+
+            // 7. Redireciona para a página de sucesso
+            header('Location: /pedidoConfirmado');
+            exit();
+
+        } catch (PDOException $e) {
+            // 8. DESFAZ A TRANSAÇÃO: Se algo deu errado, reverte todas as alterações
+            $this->conn->rollBack();
+            error_log("Erro ao finalizar pedido: " . $e->getMessage());
+            header('Location: /carrinho?erro=finalizacao');
+            exit();
+        }
+    }
+
+    public function exibirConfirmacao()
+    {
+        // Protege a página, só pode ser vista se um pedido acabou de ser feito
+        if (!isset($_SESSION['ultimo_pedido_id'])) {
+            header('Location: /home');
+            exit();
+        }
+
+        $pedidoId = $_SESSION['ultimo_pedido_id'];
+
+        // Aqui você pode buscar os dados do pedido recém-criado para exibir um resumo
+        // (Vou manter simples por enquanto, apenas exibindo o ID)
+        $viewData = ['pedido_id' => $pedidoId];
+        
+        // Limpa a variável da sessão para que a página não seja recarregada
+        unset($_SESSION['ultimo_pedido_id']);
+
+        $view = ROOT_PATH . '/public/pages/pedidoConfirmado.php';
+        require_once ROOT_PATH . '/public/components/layout.php';
+    }
+
     public function index()
     {
         // 1. Proteger a rota: verifica se o usuário está logado

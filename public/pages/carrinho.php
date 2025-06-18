@@ -8,17 +8,22 @@
     </div>
     <div>
       <span>Frete:</span>
-      <span class="float-end">A calcular</span>
+      <span class="float-end">Somente retirada</span>
     </div>
     <hr>
     <div>
       <strong>Total:</strong>
       <strong class="float-end">R$ <?php echo number_format($totalCarrinho ?? 0, 2, ',', '.'); ?></strong>
     </div>
+    
     <div class="d-grid gap-2 mt-4">
-      <button class="btn btn-primary" type="button">Finalizar Compra</button>
+        <form action="/finalizarPedido" method="post">
+            <button type="submit" class="btn btn-primary w-100" <?php if (empty($itens)) echo 'disabled'; ?>>
+                Finalizar Compra
+            </button>
+        </form>
     </div>
-  </div>
+    </div>
 
   <div class="w-75 ms-4">
     <h3>Meu Carrinho</h3>
