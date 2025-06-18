@@ -27,9 +27,17 @@
                                     <?php foreach ($itensPorPedido[$pedido['id']] as $item): ?>
                                         <li class="list-group-item d-flex align-items-center">
                                             <?php
-                                                $caminhoImagem = !empty($item['imagem_path']) ? $item['imagem_path'] : '/assets/images/default.jpg';
+                                            // Define o caminho da imagem do item, se existir, ou usa a imagem padrão
+                                            $caminhoImagemPadrao = '/assets/images/default.jpg';
+                                            if (!empty($item['imagem_path']) && file_exists(ROOT_PATH . '/public' . $item['imagem_path'])) {
+                                                $caminhoImagem = $item['imagem_path'];
+                                            } else {
+                                                $caminhoImagem = $caminhoImagemPadrao;
+                                            }
                                             ?>
-                                            <img src="<?php echo htmlspecialchars($caminhoImagem); ?>" alt="<?php echo htmlspecialchars($item['nome']); ?>" style="width: 50px; height: 50px; object-fit: contain; margin-right: 15px;">
+                                            <img src="<?php echo htmlspecialchars($caminhoImagem); ?>"
+                                                class="img-fluid rounded-start"
+                                                alt="<?php echo htmlspecialchars($item['nome']); ?>" style="max-height: 120px; object-fit: contain;">
                                             <div class="flex-grow-1">
                                                 <?php echo htmlspecialchars($item['nome']); ?>
                                                 <small class="d-block text-muted">Qtd: <?php echo $item['quantidade']; ?> | Preço Unit.: R$ <?php echo number_format($item['preco_unitario'], 2, ',', '.'); ?></small>
