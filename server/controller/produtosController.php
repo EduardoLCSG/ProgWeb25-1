@@ -19,7 +19,7 @@ class ProdutosController extends baseController
 
         // Monta SQL inicial
         $sql = "SELECT p.id, p.nome, p.descricao, p.preco, p.imagem_path, p.categoria_id 
-                FROM produtos p WHERE p.nome LIKE ?";
+                FROM produtos p WHERE LOWER(p.nome) LIKE LOWER(?)";
         $params = ["%$searchTerm%"];
 
         // Se categoria foi especificada
@@ -27,7 +27,7 @@ class ProdutosController extends baseController
             $sql .= " AND p.categoria_id = ?";
             $params[] = $categoriaId;
         }
-        
+
         try {
             $produtosQuery = $this->conn->prepare($sql);
             $produtosQuery->execute($params);

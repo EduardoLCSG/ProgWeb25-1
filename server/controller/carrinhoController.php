@@ -1,7 +1,7 @@
 <?php
 // server/controller/carrinhoController.php
-
 require_once ROOT_PATH . '/server/controller/baseController.php';
+
 
 class carrinhoController extends baseController // <-- Herda de BaseController
 {
