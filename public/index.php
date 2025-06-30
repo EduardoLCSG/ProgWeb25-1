@@ -141,6 +141,12 @@ match ($path) {
 
     // Adicione outras rotas aqui...
 
+    'GetProdutosByText' => (function () {
+        require_once ROOT_PATH . '/server/controller/produtosController.php';
+        $controller = new ProdutosController();
+        $controller->GetProdutosByText();
+    })(),
+
     default => (function () {
         http_response_code(404);
         require_once ROOT_PATH . '/server/controller/notFoundController.php';
