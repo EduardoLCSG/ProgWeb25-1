@@ -1,0 +1,28 @@
+services:
+  postgresql:
+    container_name: 'progweb'
+    image: postgres:latest
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: progwebsolar
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  pgadmin:
+    container_name: pgadminProgWeb
+    image: dpage/pgadmin4
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "seuemail@email.com"
+      PGADMIN_DEFAULT_PASSWORD: "senha1"
+    ports:
+      - "8090:80"
+    depends_on:
+      - postgresql
+
+volumes:
+  postgres_data:
